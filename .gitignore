@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Local Postgres credentials (copy from db.env.example)
+db.env
+
+# Raw BTS extracts are large
+data/raw/*
+!data/raw/.gitkeep
+
+# Large star fact extracts (rebuild with scripts/build_star_schema.py)
+data/star/FactFlightOperations.csv
+data/star/FactDelayCauseMinutes.csv
+
+# Optional local pbix
+*.pbix
+*.pbi.lock

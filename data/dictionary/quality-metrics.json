@@ -1,0 +1,20 @@
+{
+  "source_file": "2025_full_year_12_months",
+  "home_airport": "ATL",
+  "delay_threshold_minutes": 15,
+  "feedback_path": "B_ops_proxies",
+  "grain": "One row in FactFlightOperations = one scheduled flight occurrence (carrier + flight date + flight number + origin + destination) touching ATL, after dedupe.",
+  "raw_rows_year_files": 7001619,
+  "rows_after_home_scope": 628872,
+  "duplicates_removed": 0,
+  "fact_rows": 628872,
+  "date_min": "2025-01-01",
+  "date_max": "2025-12-31",
+  "null_rate_arr_delay_non_cancel": 0.002784126123334366,
+  "cancellation_rate": 0.014769301225050567,
+  "arrival_delay_rate_non_cancel": 0.20687428984609027,
+  "otp_non_cancel": 0.7903415840305753,
+  "airlines": 12,
+  "routes": 301,
+  "cause_rows": 212038
+}
