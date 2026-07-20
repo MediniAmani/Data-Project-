@@ -15,14 +15,33 @@ End-of-formation Power BI subject (primary).
 
 ```text
 BTS monthly zips
-  → build_star_schema.py
+  → notebooks/02_build_star_schema.ipynb  (or scripts/build_star_schema.py)
   → data/star/*.csv
-  → load_star_to_postgres.py
+  → notebooks/03_load_star_to_postgres.ipynb  (or scripts/load_star_to_postgres.py)
   → local PostgreSQL database postgres / schema airport_authority
   → Power BI Desktop
 ```
 
-CSV star files remain useful as a backup export. PostgreSQL is the middle warehouse for the formation story. Large fact CSVs are gitignored; rebuild them with `python scripts/build_star_schema.py` after cloning.
+### Jupyter notebooks (recommended for formation walkthrough)
+
+| Notebook | Role |
+|----------|------|
+| `notebooks/01_download_bts_range.ipynb` | Download BTS monthly zips |
+| `notebooks/02_build_star_schema.ipynb` | Transform → star CSVs + quality metrics |
+| `notebooks/03_load_star_to_postgres.ipynb` | Load star CSVs into PostgreSQL |
+
+Open notebooks with the project `.venv` kernel. Paths resolve whether the kernel cwd is `airport-authority/` or `notebooks/`.
+
+Equivalent CLI scripts remain in `scripts/` if you prefer:
+
+```powershell
+cd "c:\Amenis cv\power-bi-capstone\airport-authority"
+.\.venv\Scripts\activate
+python scripts/build_star_schema.py
+python scripts/load_star_to_postgres.py
+```
+
+CSV star files remain useful as a backup export. PostgreSQL is the middle warehouse for the formation story. Large fact CSVs are gitignored; rebuild them with the build notebook (or `python scripts/build_star_schema.py`) after cloning.
 
 Postgres setup (local install, no Docker): see `sql/README.md`.
 
@@ -40,7 +59,7 @@ Postgres setup (local install, no Docker): see `sql/README.md`.
 ### Option A: PostgreSQL (preferred for architecture story)
 
 1. Finish one-time setup in `sql/README.md`
-2. Run `python scripts/load_star_to_postgres.py`
+2. Run `notebooks/03_load_star_to_postgres.ipynb` (or `python scripts/load_star_to_postgres.py`)
 3. Power BI → Get data → PostgreSQL → `localhost` / database `postgres` / schema `airport_authority`
 4. Wire relationships as listed in `sql/README.md`
 5. Mark `dim_date` as date table
@@ -61,15 +80,6 @@ Postgres setup (local install, no Docker): see `sql/README.md`.
 | DimRoute[RouteKey] | FactFlightOperations[RouteKey] | 1:* |
 | DimDate[Date] | FactDelayCauseMinutes[Date] | 1:* |
 | DimAirline[AirlineKey] | FactDelayCauseMinutes[AirlineKey] | 1:* |
-
-## Rebuild star CSVs
-
-```powershell
-cd "c:\Amenis cv\power-bi-capstone\airport-authority"
-.\.venv\Scripts\activate
-python scripts/build_star_schema.py
-python scripts/load_star_to_postgres.py
-```
 
 ## Headline quality snapshot (ATL, 2025 full year)
 
